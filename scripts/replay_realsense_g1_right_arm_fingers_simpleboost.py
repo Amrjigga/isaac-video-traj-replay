@@ -1,3 +1,20 @@
+
+# ---------------------------------------------------------------------
+# Best current run command:
+#
+# cd ~/IsaacLab_5
+#
+# ./isaaclab.sh -p scripts/replay_realsense_g1_right_arm_fingers_simpleboost.py \
+#   --device cpu \
+#   --video_axis_map forward_z_flip_x \
+#   --video_align_yaw_deg -90 \
+#   --video_draw_hand_shape_scale 0.65 \
+#   --video_draw_wrist_motion_scale 1.0 \
+#   --video_draw_depth_motion_boost 1.0 \
+#   --simple_finger_boost \
+#   --finger_curl_boost 1.5
+# ---------------------------------------------------------------------
+
 import argparse
 import json
 import math
