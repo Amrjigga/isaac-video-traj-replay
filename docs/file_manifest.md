@@ -81,3 +81,41 @@ Fix:
 - clean the robot-following script
 - improve finger curl retargeting
 - test more RealSense videos
+
+## scripts/replay_realsense_g1_right_arm_fingers_simpleboost.py
+
+Current best RealSense video-to-robot replay script.
+
+Purpose:
+
+- replay RealSense MediaPipe hand trajectory JSON
+- draw the RealSense stick-figure target
+- drive the Unitree G1 arm/fingers from the video trajectory
+- keep the successful coordinate mapping and yaw alignment
+- add simple finger curl boost for better grip
+
+Final working mapping:
+
+- --video_axis_map forward_z_flip_x
+- --video_align_yaw_deg -90
+
+Final best finger setting:
+
+- --simple_finger_boost
+- --finger_curl_boost 1.5
+
+Important implementation detail:
+
+The simple finger boost must use the original retargeter's commanded target as the source, not the robot's current physical joint position.
+
+Reason:
+
+- using physical q_cur caused the robot hand to stay closed after gripping
+- using the commanded target preserved opening behavior
+- with boost 1.5, the robot opens/closes correctly and forms a good grip
+
+Current status:
+
+- 1.5 is the best current value
+- good enough for now
+- more experiments can be done later with other videos and grip types

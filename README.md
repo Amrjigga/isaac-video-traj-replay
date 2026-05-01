@@ -135,3 +135,41 @@ Useful diagnostics from the successful JSON:
 3. Train a video-landmarks-to-G1-palm-orientation model instead of using the VR-trained model.
 4. Improve finger curl retargeting.
 5. Add left-hand video replay after collecting a left-hand RealSense JSON.
+
+## Final Finger Boost Version
+
+### scripts/replay_realsense_g1_right_arm_fingers_simpleboost.py
+
+This is the current best robot-following script.
+
+It is based on the RealSense robot replay script, but adds a simple finger curl boost.
+
+The important final fix was that the boost uses the original retargeter's current commanded finger target, not the robot's physical current joint position.
+
+Why this matters:
+
+- boosting from physical q_cur made the robot forget to reopen after closing
+- boosting from the commanded target preserves the original open/close behavior
+- this keeps the good timing of the original replay while making grip stronger
+
+Best current run:
+
+cd ~/IsaacLab_5
+
+./isaaclab.sh -p scripts/replay_realsense_g1_right_arm_fingers_simpleboost.py \
+  --device cpu \
+  --video_axis_map forward_z_flip_x \
+  --video_align_yaw_deg -90 \
+  --video_draw_hand_shape_scale 0.65 \
+  --video_draw_wrist_motion_scale 1.0 \
+  --video_draw_depth_motion_boost 1.0 \
+  --simple_finger_boost \
+  --finger_curl_boost 1.5
+
+Current result:
+
+- wrist trajectory follows the RealSense stick figure
+- robot fingers open and close correctly
+- grip is strong enough with finger_curl_boost 1.5
+- 1.5 is the best current value and good enough for now
+- more tuning can be done later on other videos
