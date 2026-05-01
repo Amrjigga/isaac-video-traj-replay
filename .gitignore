@@ -1,0 +1,1 @@
+__pycache__/\n*.pyc\n*.bag\n*.mp4\n*.mkv\n*.avi\n*.pt\n*.pth\n*.npz\n*.npy\n*.json\n!package.json\n
